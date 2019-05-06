@@ -18,7 +18,7 @@ class DbQueries:
         """
         user_details = None
         try:
-            user_details = User.objects.filter().values()
+            user_details = list(User.objects.filter().values())
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -53,7 +53,7 @@ class DbQueries:
                 order = -1
             user_selection_details = User.objects.mongo_find(query_dict, projection_dict).sort(sort_par, order).limit(limit_item)
             if user_selection_details:
-                user_selection_details_list =  [loads(dumps(data)) for data in user_selection_details]
+                user_selection_details_list = [loads(dumps(data)) for data in user_selection_details]
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -61,3 +61,62 @@ class DbQueries:
             logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
             logger.error(str(e))
         return user_selection_details_list
+
+    @staticmethod
+    def get_user_details_by_id(id):
+        """
+        this function gets user record by id
+
+        :param id:
+        :return:
+        """
+        user_data = None
+        try:
+            user_data = list(User.objects.filter(id=id).values())
+            print(len(user_data))
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
+            logger.error(str(e))
+        return user_data
+
+    @staticmethod
+    def update_user(id, data):
+        """
+        this function update user details
+
+        :param id:
+        :param data:
+        :return:
+        """
+        status = 1000
+        try:
+            query_dict = {'$set': data}
+            status = User.objects.mongo_update({'id': int(id)}, query_dict)
+            if status['nModified']:
+                status = 200
+            else:
+                status = "no records are in db for id " + str(id)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
+            logger.error(str(e))
+        return status
+
+    @staticmethod
+    def delete_user(id):
+        status =  1000
+        try:
+            status = User.objects.filter(id=id).delete()
+            if status[1]['UserDetailsApp.User']:
+                status = 200
+            else:
+                status = "no records are in db for id " + str(id)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
+            logger.error(str(e))
+        return status

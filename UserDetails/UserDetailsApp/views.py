@@ -67,12 +67,57 @@ class UserDetails(APIView):
         return Response(user_data)
 
 
-# class UserQueryWithId(id):
-#
-#     def get(self, request):
-#         """
-#
-#         :param request:
-#         :return:
-#         """
-        
+class UserQueryWithId(APIView):
+
+    def get(self, request, id):
+        """
+
+        :param request:
+        :return:
+        """
+        user_data = None
+        try:
+            user_data = DbQueries.get_user_details_by_id(id)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
+            logger.error(str(e))
+        return Response(user_data)
+
+    def put(self, request, id):
+        """
+
+        :param request:
+        :param id:
+        :return:
+        """
+        status = 1000
+        try:
+            data = request.data
+            status = DbQueries.update_user(id, data)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
+            logger.error(str(e))
+        return Response(status)
+
+    def delete(self, request, id):
+        """
+
+        :param request:
+        :param id:
+        :return:
+        """
+        status = 1000
+        try:
+            data = request.data
+            print(data)
+            status = DbQueries.delete_user(id)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
+            logger.error(str(e))
+        return Response(status)
