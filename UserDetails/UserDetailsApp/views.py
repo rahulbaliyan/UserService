@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 import os
 import sys
 import logging
-from UserDetailsApp.seri import UserSerializer
+from UserDetailsApp.serializer import UserSerializer
 from UserDetailsApp.information_retrival import DbQueries
 from django.utils.datastructures import MultiValueDictKeyError
 
