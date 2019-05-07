@@ -1,8 +1,8 @@
 """
-_author__ = "rahul"
+__author__ = "Rahul kumar"
 __version__ ="1.0"
-__date__ = "Jan  6 10:51:27 2019"
-__copyright__ = "©2019 quadratyx"
+__date__ = "May 7 15:48:15 2019"
+__copyright__ = "©2019 rahul_kumar"
 """
 
 from django.conf.urls import url

@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 
-__author__ = "rahul"
+__author__ = "Rahul kumar"
 __version__ ="1.0"
-__date__ = "Jan 22 15:48:15 2019"
-__copyright__ = "©2019 quadratyx"
+__date__ = "May 7 15:48:15 2019"
+__copyright__ = "©2019 rahul_kumar"
 
 """
 
@@ -30,9 +30,6 @@ if READ_DOT_ENV_FILE:
     env.read_env(env_file)
 DEBUG = False
 ALLOWED_HOSTS = ["*"]
-# config path variable
-# global_config = os.environ['MORTGAGE_CONFIG_PATH']
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -105,15 +102,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'UserDetails.wsgi.application'
 
-ADMINS = [('rkumar@quadratyx.com')]
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-print(env('DB_NAME'), env('DB_HOST'), env('DB_PORT'))
-
-
-
+ADMINS = [('rahulbaliyan01@gmail.com')]
 # Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
