@@ -43,13 +43,11 @@ Django uses Unittest cases of python
 
 Run TestCase:
 ==============
-go to in current working dir and run
+
+$./manage.py test (run that command current working dir)
 =
 
-$./manage.py test
-=
-
-I wrote three test cases like wise we can write more such cases of an dajngo application
+#I wrote three test cases like wise we can write more such cases of an dajngo application
 
 Master git repository:
 ======================
