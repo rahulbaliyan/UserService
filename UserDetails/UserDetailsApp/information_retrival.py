@@ -51,7 +51,7 @@ class DbQueries:
                 sort_par_list = age.split("-")
                 sort_par = sort_par_list[1]
                 order = -1
-            user_selection_details = User.objects.mongo_find(query_dict, projection_dict).sort(sort_par, order).limit(limit_item)
+            user_selection_details = User.objects.mongo_find(query_dict, projection_dict).sort(sort_par, order).skip(limit_item*(page-1)).limit(limit_item)
             if user_selection_details:
                 user_selection_details_list = [loads(dumps(data)) for data in user_selection_details]
 

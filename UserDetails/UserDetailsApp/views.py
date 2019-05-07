@@ -27,29 +27,37 @@ class UserDetails(APIView):
         :param request:
         :return:
         """
-        status = 404
+        status_code = 1000
+        status_error  = ""
         try:
             data = request.data
             serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                status = 200
+                status_code = 201
             else:
-                status = serializer.errors
+                status_error = serializer.errors
+                status_code = 1000
+
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
             logger.error(str(e))
-        return Response(status)
+        response_json = {
+            'status_code': status_code,
+            'error_messages': status_error
+        }
+        return Response(response_json)
 
     def get(self, request):
         """
-
         :param request:
         :return:
         """
         user_data = None
+        status_code = 1000
+        error_message = None
         try:
             try:
                 name = request.GET['name']
@@ -58,13 +66,28 @@ class UserDetails(APIView):
                 sort = request.GET['sort']
                 user_data = DbQueries.get_selected_users(page, limit, name, sort)
             except MultiValueDictKeyError:
+                error_message = "some query parameter are missing. Its a all_users's details"
                 user_data = DbQueries.get_all_users()
+            if user_data:
+                status_code = 200
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             logger.error(str([exc_type, fname, exc_tb.tb_lineno]))
             logger.error(str(e))
-        return Response(user_data)
+        if error_message:
+            response_json = {
+                'status_code': status_code,
+                'data': user_data,
+                'error_message': error_message
+            }
+        else:
+            response_json = {
+                'status_code': status_code,
+                'data': user_data,
+                'error_message': error_message
+            }
+        return Response(response_json)
 
 
 class UserQueryWithId(APIView):
