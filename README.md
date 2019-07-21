@@ -1,7 +1,6 @@
 UserDetails Django Application, This Application uses mongodb for database
 ====
 
-
 Building
 =========
 
