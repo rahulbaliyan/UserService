@@ -3,7 +3,7 @@ dataclasses==0.6
 dj-database-url==0.5.0
 Django==1.11
 django-environ==0.4.5
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 djongo==1.2.20
 gunicorn==19.9.0
 pymongo==3.8.0
